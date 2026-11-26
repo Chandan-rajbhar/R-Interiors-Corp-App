@@ -31,23 +31,22 @@ function AppRoutes() {
   const navigate = useNavigate();
   const [showSplash, setShowSplash] = useState(true);
 
-  if (showSplash || location.pathname === '/') {
-    return (
-      <Splash
-        onFinish={() => {
-          setShowSplash(false);
-          if (location.pathname === '/') {
-            navigate('/home', { replace: true });
-          }
-        }}
-      />
-    );
-  }
+  const isSplashVisible = showSplash || location.pathname === '/';
 
   return (
-    <AppLayout>
-      <AnimatePresence mode="wait" initial={false}>
-        <Routes location={location} key={location.pathname}>
+    <AppLayout hideChrome={isSplashVisible}>
+      {isSplashVisible ? (
+        <Splash
+          onFinish={() => {
+            setShowSplash(false);
+            if (location.pathname === '/') {
+              navigate('/home', { replace: true });
+            }
+          }}
+        />
+      ) : (
+        <AnimatePresence mode="wait" initial={false}>
+          <Routes location={location} key={location.pathname}>
           <Route path="/home" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/services" element={<Directory />} />
@@ -75,9 +74,10 @@ function AppRoutes() {
           <Route path="/manta-reviews" element={<MantaInfoPage mode="reviews" />} />
           <Route path="/terms" element={<MantaInfoPage mode="terms" />} />
           <Route path="/privacy" element={<MantaInfoPage mode="privacy" />} />
-          <Route path="*" element={<Navigate to="/home" replace />} />
-        </Routes>
-      </AnimatePresence>
+            <Route path="*" element={<Navigate to="/home" replace />} />
+          </Routes>
+        </AnimatePresence>
+      )}
     </AppLayout>
   );
 }
