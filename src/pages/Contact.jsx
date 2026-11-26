@@ -1,6 +1,7 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { Phone, Mail, MapPin, Clock, Calculator, ExternalLink } from 'lucide-react';
+import { Phone, Mail, MapPin, Clock, Calculator, ExternalLink, Copy, Share2, Check } from 'lucide-react';
 import { AnimatedPage } from '../components/AnimatedPage';
 import { ContactCard } from '../components/ContactCard';
 import { BUSINESS_INFO } from '../data/businessData';
@@ -8,6 +9,39 @@ import { HERO_IMAGE } from '../data/servicesData';
 
 export function Contact() {
   const navigate = useNavigate();
+  const [contactActionStatus, setContactActionStatus] = useState('');
+
+  const handleCopyAddress = async () => {
+    try {
+      await navigator.clipboard.writeText(BUSINESS_INFO.address.full);
+      setContactActionStatus('Business address copied');
+    } catch {
+      setContactActionStatus('Unable to access clipboard');
+    }
+  };
+
+  const handleShareProfile = async () => {
+    const url = new URL('/about', window.location.origin).toString();
+    const shareData = {
+      title: BUSINESS_INFO.name,
+      text: `${BUSINESS_INFO.name} | ${BUSINESS_INFO.phone}`,
+      url,
+    };
+    if (navigator.share) {
+      try {
+        await navigator.share(shareData);
+        return;
+      } catch (error) {
+        if (error.name === 'AbortError') return;
+      }
+    }
+    try {
+      await navigator.clipboard.writeText(url);
+      setContactActionStatus('Business profile link copied');
+    } catch {
+      setContactActionStatus('Unable to share from this browser');
+    }
+  };
 
   return (
     <AnimatedPage>
@@ -58,6 +92,27 @@ export function Contact() {
           subtitle="Mon – Fri: 7:00 AM – 4:30 PM • Sat–Sun: Closed"
           onClick={() => navigate('/hours')}
         />
+
+        <div className="grid grid-cols-2 gap-2.5">
+          <motion.button
+            whileTap={{ scale: 0.98 }}
+            type="button"
+            onClick={handleCopyAddress}
+            className="py-2.5 px-3 rounded-xl border border-[#C7C7C7] bg-white text-[#171717] text-xs font-bold flex items-center justify-center gap-1.5 cursor-pointer"
+          >
+            <Copy className="w-3.5 h-3.5 text-[#A71912]" /> Copy Address
+          </motion.button>
+          <motion.button
+            whileTap={{ scale: 0.98 }}
+            type="button"
+            onClick={handleShareProfile}
+            className="py-2.5 px-3 rounded-xl border border-[#C7C7C7] bg-white text-[#171717] text-xs font-bold flex items-center justify-center gap-1.5 cursor-pointer"
+          >
+            {contactActionStatus.includes('copied') ? <Check className="w-3.5 h-3.5 text-[#A71912]" /> : <Share2 className="w-3.5 h-3.5 text-[#A71912]" />}
+            Share Profile
+          </motion.button>
+        </div>
+        {contactActionStatus && <p role="status" className="text-[11px] text-neutral-500">{contactActionStatus}</p>}
 
         {/* Action Buttons */}
         <div className="pt-2 space-y-2.5">

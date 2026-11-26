@@ -5,19 +5,40 @@ import { AnimatedPage } from '../components/AnimatedPage';
 import { BUSINESS_HOURS, BUSINESS_INFO } from '../data/businessData';
 
 function getScheduleSnapshot() {
-  const now = new Date();
-  const jsDayIndex = now.getDay(); // 0 = Sun, 1 = Mon ... 6 = Sat
-  const mondayBasedIndex = jsDayIndex === 0 ? 6 : jsDayIndex - 1;
+  const parts = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'America/New_York',
+    weekday: 'long',
+    hour: 'numeric',
+    minute: '2-digit',
+    hourCycle: 'h23',
+  }).formatToParts(new Date());
+  const values = Object.fromEntries(parts.map(({ type, value }) => [type, value]));
+  const mondayBasedIndex = BUSINESS_HOURS.findIndex((item) => item.day === values.weekday);
   const todayItem = BUSINESS_HOURS[mondayBasedIndex];
-  const currentMinutes = now.getHours() * 60 + now.getMinutes();
+  const currentMinutes = Number(values.hour) * 60 + Number(values.minute);
   const isCurrentlyOpen =
     todayItem.isOpen && currentMinutes >= 7 * 60 && currentMinutes < 16 * 60 + 30;
-  return { mondayBasedIndex, isCurrentlyOpen };
+
+  let nextOpening = '';
+  if (isCurrentlyOpen) {
+    nextOpening = 'Closes at 4:30 PM';
+  } else {
+    for (let offset = 0; offset < BUSINESS_HOURS.length + 1; offset += 1) {
+      const nextDayIndex = (mondayBasedIndex + offset) % BUSINESS_HOURS.length;
+      const day = BUSINESS_HOURS[nextDayIndex];
+      if (day.isOpen && (offset > 0 || currentMinutes < 7 * 60)) {
+        nextOpening = `Next opens ${offset === 0 ? 'today' : day.day} at 7:00 AM`;
+        break;
+      }
+    }
+  }
+
+  return { mondayBasedIndex, isCurrentlyOpen, nextOpening };
 }
 
 export function BusinessHours() {
   const navigate = useNavigate();
-  const [{ mondayBasedIndex, isCurrentlyOpen }, setSnapshot] = useState(getScheduleSnapshot);
+  const [{ mondayBasedIndex, isCurrentlyOpen, nextOpening }, setSnapshot] = useState(getScheduleSnapshot);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -47,6 +68,9 @@ export function BusinessHours() {
       </div>
 
       <div className="px-4 py-5 space-y-4">
+        <p className="text-xs text-neutral-500" aria-live="polite">
+          {nextOpening} <span className="text-neutral-400">(Florida local time)</span>
+        </p>
         <div className="bg-white rounded-2xl border border-[#C7C7C7]/50 shadow-sm overflow-hidden divide-y divide-neutral-100">
           {BUSINESS_HOURS.map((item, idx) => {
             const isToday = idx === mondayBasedIndex;

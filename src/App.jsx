@@ -1,4 +1,5 @@
-import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import { useState } from 'react';
+import { BrowserRouter, Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { AnimatePresence, MotionConfig } from 'framer-motion';
 import { AppLayout } from './layouts/AppLayout';
 import { Splash } from './pages/Splash';
@@ -12,12 +13,31 @@ import { RequestEstimate } from './pages/RequestEstimate';
 import { BusinessHours } from './pages/BusinessHours';
 import { Reviews } from './pages/Reviews';
 import { Menu } from './pages/Menu';
+import { Directory } from './pages/Directory';
+import { DirectoryCategory } from './pages/DirectoryCategory';
+import { DirectoryInfo } from './pages/DirectoryInfo';
+import { FAQs } from './pages/FAQs';
+import { Login } from './pages/Login';
+import { Signup } from './pages/Signup';
+import { Notifications } from './pages/Notifications';
+import { Profile } from './pages/Profile';
 
 function AppRoutes() {
   const location = useLocation();
+  const navigate = useNavigate();
+  const [showSplash, setShowSplash] = useState(true);
 
-  if (location.pathname === '/') {
-    return <Splash />;
+  if (showSplash || location.pathname === '/') {
+    return (
+      <Splash
+        onFinish={() => {
+          setShowSplash(false);
+          if (location.pathname === '/') {
+            navigate('/home', { replace: true });
+          }
+        }}
+      />
+    );
   }
 
   return (
@@ -34,6 +54,14 @@ function AppRoutes() {
           <Route path="/hours" element={<BusinessHours />} />
           <Route path="/reviews" element={<Reviews />} />
           <Route path="/menu" element={<Menu />} />
+          <Route path="/directory" element={<Directory />} />
+          <Route path="/faqs" element={<FAQs />} />
+          <Route path="/directory/category/:categoryId" element={<DirectoryCategory />} />
+          <Route path="/directory/info/:topicId" element={<DirectoryInfo />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/notifications" element={<Notifications />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="*" element={<Navigate to="/home" replace />} />
         </Routes>
       </AnimatePresence>

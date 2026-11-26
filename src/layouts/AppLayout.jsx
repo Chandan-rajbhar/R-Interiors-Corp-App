@@ -25,6 +25,7 @@ export function AppLayout({ children }) {
           {children}
         </main>
         <BottomNavigation />
+        <div id="app-modal-root" />
       </div>
     </div>
   );

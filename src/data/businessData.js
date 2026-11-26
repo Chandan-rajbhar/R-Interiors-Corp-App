@@ -5,7 +5,7 @@ export const BUSINESS_INFO = {
   tagline: 'Professional Craftsmanship. Quality You Can Trust.',
   heroHeading: 'Transform Your Space with Expert Craftsmanship.',
   heroSubheading:
-    'Trusted stucco finishing and precision drywall installation in Deerfield Beach, Florida and surrounding areas.',
+    'Trusted stucco finishing and precision drywall installation in Deerfield Beach, Florida.',
   address: {
     street: '1240 SW 6th Terrace',
     city: 'Deerfield Beach',
@@ -21,9 +21,9 @@ export const BUSINESS_INFO = {
   emailHref: 'mailto:info@rinteriorscorp.com',
   experienceYears: '27+',
   servingSince: '2015',
-  serviceArea: 'Deerfield Beach, Florida & Surrounding Areas',
+  serviceArea: 'Deerfield Beach, Florida',
   aboutSummary:
-    'R Interiors Corp brings over 27 years of expertise as a trusted stucco contractor, proudly serving Deerfield Beach, Florida, and surrounding areas since 2015.',
+    'R Interiors Corp brings over 27 years of expertise as a trusted stucco contractor, serving Deerfield Beach, Florida, since 2015.',
   aboutExtended:
     'The company specializes in professional stucco finishes and precise drywall installation, focusing on quality, craftsmanship, and customer satisfaction.',
 };
@@ -39,7 +39,7 @@ export const BUSINESS_HIGHLIGHTS = [
     id: 'since',
     value: '2015',
     label: 'Serving Since',
-    description: 'Proudly serving Deerfield Beach and surrounding communities.',
+    description: 'Serving customers in Deerfield Beach, Florida since 2015.',
   },
   {
     id: 'craftsmanship',

@@ -10,10 +10,11 @@ export const SERVICES_DATA = [
     id: 'stucco-finishing',
     slug: 'stucco-finishing',
     title: 'Stucco Finishing',
+    searchTerms: ['stucco', 'stucco finishing', 'stucco contractor', 'contractors', 'home improvement'],
     shortDescription:
       'Professional stucco finishing solutions with quality-focused workmanship and attractive, durable finishes.',
     fullDescription:
-      'R Interiors Corp delivers dependable exterior and interior stucco finishing designed for lasting durability and curb appeal in South Florida. With over 27 years of hands-on trade expertise, we handle surface preparation, uniform texture application, architectural trim, and clean finishing.',
+      'R Interiors Corp delivers dependable exterior and interior stucco finishing designed for lasting durability and curb appeal. With over 27 years of hands-on trade expertise, we handle surface preparation, uniform texture application, architectural trim, and clean finishing.',
     image: stuccoFinishing,
     galleryImages: [stuccoFinishing, stuccoTextureDetail, commercialStuccoFacade],
     benefits: [
@@ -29,6 +30,7 @@ export const SERVICES_DATA = [
     id: 'drywall-installation',
     slug: 'drywall-installation',
     title: 'Drywall Installation',
+    searchTerms: ['drywall', 'drywall installation', 'drywall services', 'contractors', 'interior construction', 'home improvement'],
     shortDescription:
       'Professional drywall installation with precision-focused work and clean, lasting craftsmanship.',
     fullDescription:

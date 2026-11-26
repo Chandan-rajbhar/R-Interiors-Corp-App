@@ -5,20 +5,24 @@ import { BrandLogo } from '../assets/icons/BrandLogo';
 import { BUSINESS_INFO } from '../data/businessData';
 import { HERO_IMAGE } from '../data/servicesData';
 
-export function Splash() {
+export function Splash({ onFinish }) {
   const navigate = useNavigate();
   const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigate('/home', { replace: true });
+      if (onFinish) {
+        onFinish();
+      } else {
+        navigate('/home', { replace: true });
+      }
     }, 2000);
     return () => clearTimeout(timer);
-  }, [navigate]);
+  }, [navigate, onFinish]);
 
   return (
-    <div className="min-h-screen w-full bg-[#ECEEF2] sm:py-6 sm:px-4 flex items-center justify-center">
-      <div className="w-full sm:max-w-[430px] min-h-screen sm:min-h-[840px] sm:max-h-[900px] sm:h-[calc(100vh-3rem)] bg-[#171717] sm:rounded-[2.25rem] sm:border-[6px] sm:border-[#171717] sm:shadow-[0_24px_60px_rgba(23,23,23,0.28)] relative overflow-hidden flex flex-col items-center justify-center px-7 text-center">
+    <div className="min-h-dvh w-full bg-[#ECEEF2] sm:py-5 sm:px-4 flex items-center justify-center">
+      <div className="w-full sm:max-w-[430px] h-dvh sm:h-[min(860px,calc(100dvh-2.5rem))] bg-[#171717] sm:rounded-[2.25rem] sm:border-[6px] sm:border-[#171717] sm:shadow-[0_24px_60px_rgba(23,23,23,0.28)] relative overflow-hidden flex flex-col items-center justify-center px-7 text-center">
         {/* Background Construction Image */}
         <img
           src={HERO_IMAGE}

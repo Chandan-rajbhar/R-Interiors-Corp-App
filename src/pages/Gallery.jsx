@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { X, Info, ChevronLeft, ChevronRight } from 'lucide-react';
 import { AnimatedPage } from '../components/AnimatedPage';
@@ -96,78 +97,85 @@ export function Gallery() {
         </div>
       </div>
 
-      {/* Full-Screen Image Preview Modal */}
-      <AnimatePresence>
-        {activeItem && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setActiveIndex(null)}
-            className="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm flex flex-col justify-between p-4"
-            role="dialog"
-            aria-modal="true"
-            aria-label={activeItem.title}
-          >
-            <div className="flex items-center justify-between text-white">
-              <span className="px-2.5 py-1 rounded-full bg-[#A71912] text-[11px] font-bold uppercase tracking-wider">
-                {activeItem.category}
-              </span>
-              <button
-                type="button"
+      {/* Full-Screen Image Preview Modal (scoped inside mobile app wrapper) */}
+      {(() => {
+        const modalContent = (
+          <AnimatePresence>
+            {activeItem && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
                 onClick={() => setActiveIndex(null)}
-                aria-label="Close preview"
-                className="w-10 h-10 rounded-full bg-white/15 hover:bg-white/25 flex items-center justify-center text-white cursor-pointer"
+                className="absolute inset-0 z-50 bg-black/90 backdrop-blur-sm flex flex-col justify-between p-4"
+                role="dialog"
+                aria-modal="true"
+                aria-label={activeItem.title}
               >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            <motion.div
-              key={activeItem.id}
-              initial={{ opacity: 0, scale: 0.94 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.94 }}
-              transition={{ duration: 0.2 }}
-              onClick={(e) => e.stopPropagation()}
-              className="relative max-w-md w-full mx-auto my-auto"
-            >
-              <img
-                src={activeItem.image}
-                alt={activeItem.title}
-                className="w-full max-h-[65vh] object-contain rounded-2xl shadow-2xl"
-              />
-              {filteredItems.length > 1 && (
-                <>
+                <div className="flex items-center justify-between text-white">
+                  <span className="px-2.5 py-1 rounded-full bg-[#A71912] text-[11px] font-bold uppercase tracking-wider">
+                    {activeItem.category}
+                  </span>
                   <button
                     type="button"
-                    onClick={handlePrev}
-                    aria-label="Previous image"
-                    className="absolute left-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/55 text-white flex items-center justify-center hover:bg-black/80 cursor-pointer"
+                    onClick={() => setActiveIndex(null)}
+                    aria-label="Close preview"
+                    className="w-10 h-10 rounded-full bg-white/15 hover:bg-white/25 flex items-center justify-center text-white cursor-pointer"
                   >
-                    <ChevronLeft className="w-5 h-5" />
+                    <X className="w-5 h-5" />
                   </button>
-                  <button
-                    type="button"
-                    onClick={handleNext}
-                    aria-label="Next image"
-                    className="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/55 text-white flex items-center justify-center hover:bg-black/80 cursor-pointer"
-                  >
-                    <ChevronRight className="w-5 h-5" />
-                  </button>
-                </>
-              )}
-            </motion.div>
+                </div>
 
-            <div className="max-w-md w-full mx-auto text-center text-white pb-2">
-              <h2 className="text-base font-bold">{activeItem.title}</h2>
-              <p className="mt-1 text-xs text-neutral-300 leading-relaxed">
-                {activeItem.caption}
-              </p>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+                <motion.div
+                  key={activeItem.id}
+                  initial={{ opacity: 0, scale: 0.94 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.94 }}
+                  transition={{ duration: 0.2 }}
+                  onClick={(e) => e.stopPropagation()}
+                  className="relative w-full mx-auto my-auto"
+                >
+                  <img
+                    src={activeItem.image}
+                    alt={activeItem.title}
+                    className="w-full max-h-[58vh] object-contain rounded-2xl shadow-2xl"
+                  />
+                  {filteredItems.length > 1 && (
+                    <>
+                      <button
+                        type="button"
+                        onClick={handlePrev}
+                        aria-label="Previous image"
+                        className="absolute left-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/55 text-white flex items-center justify-center hover:bg-black/80 cursor-pointer"
+                      >
+                        <ChevronLeft className="w-5 h-5" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={handleNext}
+                        aria-label="Next image"
+                        className="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/55 text-white flex items-center justify-center hover:bg-black/80 cursor-pointer"
+                      >
+                        <ChevronRight className="w-5 h-5" />
+                      </button>
+                    </>
+                  )}
+                </motion.div>
+
+                <div className="w-full mx-auto text-center text-white pb-2">
+                  <h2 className="text-base font-bold">{activeItem.title}</h2>
+                  <p className="mt-1 text-xs text-neutral-300 leading-relaxed">
+                    {activeItem.caption}
+                  </p>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        );
+
+        const modalRoot = typeof document !== 'undefined' ? document.getElementById('app-modal-root') : null;
+        return modalRoot ? createPortal(modalContent, modalRoot) : modalContent;
+      })()}
     </AnimatedPage>
   );
 }
