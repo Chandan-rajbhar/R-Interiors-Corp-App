@@ -14,6 +14,12 @@ import {
   Home,
   Search,
   BookOpen,
+  TrendingUp,
+  Globe,
+  Building2,
+  Newspaper,
+  ShieldCheck,
+  Scale,
 } from 'lucide-react';
 import { BUSINESS_INFO } from '../data/businessData';
 
@@ -80,6 +86,59 @@ const MENU_SECTIONS = [
         sublabel: 'Answers and preparation notes',
         path: '/faqs',
         icon: BookOpen,
+      },
+    ],
+  },
+  {
+    title: 'Manta Services & Resources',
+    items: [
+      {
+        label: 'Digital Marketing Services',
+        sublabel: 'Online marketing & growth solutions',
+        path: '/digital-marketing',
+        icon: TrendingUp,
+      },
+      {
+        label: 'Local SEO Starter & FAQs',
+        sublabel: 'Rankings, packages & SEO answers',
+        path: '/seo-services',
+        icon: Globe,
+      },
+      {
+        label: 'Business Listings Management',
+        sublabel: 'Free listing claim & directory sync',
+        path: '/business-listings',
+        icon: Building2,
+      },
+      {
+        label: 'Small Business Blog',
+        sublabel: 'Marketing advice that works',
+        path: '/blog',
+        icon: Newspaper,
+      },
+      {
+        label: 'About Manta & Reviews',
+        sublabel: '25+ years • 35M businesses',
+        path: '/manta-about',
+        icon: Info,
+      },
+      {
+        label: 'Manta Business Reviews',
+        sublabel: 'Verified customer testimonials',
+        path: '/manta-reviews',
+        icon: Star,
+      },
+      {
+        label: 'Terms & Conditions',
+        sublabel: 'Platform usage & listing terms',
+        path: '/terms',
+        icon: Scale,
+      },
+      {
+        label: 'Privacy Policy',
+        sublabel: 'Data collection & privacy details',
+        path: '/privacy',
+        icon: ShieldCheck,
       },
     ],
   },

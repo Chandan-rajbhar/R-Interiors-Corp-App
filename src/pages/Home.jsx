@@ -12,6 +12,7 @@ import {
   Star,
 } from 'lucide-react';
 import { AnimatedPage } from '../components/AnimatedPage';
+import { DirectoryCategoriesGrid } from '../components/DirectoryCategoriesGrid';
 import { DirectorySearch } from '../components/DirectorySearch';
 import { ServiceCard } from '../components/ServiceCard';
 import {
@@ -77,7 +78,7 @@ export function Home() {
       </section>
 
       <div className="px-4 py-5 space-y-6">
-        {/* Manta-Style Quick Service & Directory Search */}
+        {/* Quick Service & Directory Search */}
         <section aria-label="Search services and directory">
           <div className="flex items-center justify-between mb-2">
             <h2 className="text-xs font-extrabold uppercase tracking-wider text-neutral-500">
@@ -88,10 +89,43 @@ export function Home() {
               onClick={() => navigate('/directory')}
               className="text-xs font-bold text-[#A71912] inline-flex items-center gap-1 hover:underline cursor-pointer"
             >
-              Browse Directory <ArrowRight className="w-3 h-3" />
+              Full Directory <ArrowRight className="w-3 h-3" />
             </button>
           </div>
           <DirectorySearch compact />
+        </section>
+
+        {/* Browse Directory Categories */}
+        <DirectoryCategoriesGrid
+          heading="Browse Directory"
+          subheading="Select any category to explore local listings and services."
+          headingId="home-directory-heading"
+        />
+
+        {/* Our Services */}
+        <section aria-labelledby="home-services-heading">
+          <div className="flex items-center justify-between mb-3">
+            <div>
+              <h2 id="home-services-heading" className="text-base font-extrabold text-[#171717]">
+                Our Specialty Services
+              </h2>
+              <p className="text-[11px] text-neutral-500">
+                Exterior stucco &amp; interior drywall craftsmanship
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => navigate('/services')}
+              className="text-xs font-bold text-[#A71912] inline-flex items-center gap-1 hover:underline cursor-pointer shrink-0"
+            >
+              View All <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            {SERVICES_DATA.map((service) => (
+              <ServiceCard key={service.id} service={service} compact />
+            ))}
+          </div>
         </section>
 
         {/* Business Highlights */}
@@ -104,14 +138,16 @@ export function Home() {
                   key={item.id}
                   className="bg-white rounded-2xl p-3.5 border border-[#C7C7C7]/50 shadow-sm flex flex-col items-start"
                 >
-                  <div className="w-8 h-8 rounded-lg bg-[#A71912]/10 text-[#A71912] flex items-center justify-center mb-2">
-                    <Icon className="w-4 h-4" />
+                  <div className="flex items-center justify-between w-full mb-2">
+                    <div className="w-8 h-8 rounded-lg bg-[#A71912]/10 text-[#A71912] flex items-center justify-center">
+                      <Icon className="w-4 h-4" />
+                    </div>
+                    <span className="text-sm font-black text-[#171717]">
+                      {item.value}
+                    </span>
                   </div>
-                  <span className="text-base font-black text-[#171717] leading-none">
-                    {item.value}
-                  </span>
-                  <h2 className="mt-1 text-xs font-bold text-[#171717]">{item.label}</h2>
-                  <p className="mt-1 text-[11px] text-neutral-500 leading-snug">
+                  <h2 className="text-xs font-bold text-[#171717]">{item.label}</h2>
+                  <p className="mt-0.5 text-[11px] text-neutral-500 leading-snug">
                     {item.description}
                   </p>
                 </div>
@@ -120,39 +156,26 @@ export function Home() {
           </div>
         </section>
 
-        {/* Our Services */}
-        <section aria-labelledby="home-services-heading">
-          <div className="flex items-center justify-between mb-3">
-            <h2 id="home-services-heading" className="text-base font-extrabold text-[#171717]">
-              Our Services
-            </h2>
-            <button
-              type="button"
-              onClick={() => navigate('/services')}
-              className="text-xs font-bold text-[#A71912] inline-flex items-center gap-1 hover:underline cursor-pointer"
-            >
-              View All <ArrowRight className="w-3.5 h-3.5" />
-            </button>
-          </div>
-          <div className="grid grid-cols-2 gap-3">
-            {SERVICES_DATA.map((service) => (
-              <ServiceCard key={service.id} service={service} compact />
-            ))}
-          </div>
-        </section>
-
-        {/* Why Choose Us */}
+        {/* Why Choose Us & Company Overview */}
         <section
           aria-labelledby="why-choose-heading"
-          className="bg-white rounded-2xl p-4 border border-[#C7C7C7]/50 shadow-sm"
+          className="bg-white rounded-2xl p-4 border border-[#C7C7C7]/50 shadow-sm space-y-4"
         >
-          <h2 id="why-choose-heading" className="text-base font-extrabold text-[#171717]">
-            Why Choose R Interiors Corp
-          </h2>
-          <p className="mt-1 text-xs text-neutral-500">
-            Dependable stucco and drywall craftsmanship tailored to your property.
-          </p>
-          <ul className="mt-3.5 space-y-2.5">
+          <div>
+            <div className="flex items-center justify-between gap-2">
+              <h2 id="why-choose-heading" className="text-base font-extrabold text-[#171717]">
+                Why Choose {BUSINESS_INFO.name}
+              </h2>
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-neutral-100 text-neutral-700 shrink-0">
+                Est. {BUSINESS_INFO.servingSince}
+              </span>
+            </div>
+            <p className="mt-1 text-xs text-neutral-600 leading-relaxed">
+              {BUSINESS_INFO.aboutSummary}
+            </p>
+          </div>
+
+          <ul className="space-y-2.5 pt-2 border-t border-neutral-100">
             {WHY_CHOOSE_US.map((item) => (
               <li key={item.id} className="flex items-start gap-2.5">
                 <CheckCircle2 className="w-4 h-4 text-[#A71912] shrink-0 mt-0.5" />
@@ -165,26 +188,14 @@ export function Home() {
               </li>
             ))}
           </ul>
-        </section>
 
-        {/* About Preview */}
-        <section className="bg-white rounded-2xl p-4 border border-[#C7C7C7]/50 shadow-sm">
-          <div className="flex items-center justify-between">
-            <h2 className="text-base font-extrabold text-[#171717]">About Our Company</h2>
-            <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-neutral-100 text-neutral-700">
-              Est. {BUSINESS_INFO.servingSince}
-            </span>
-          </div>
-          <p className="mt-2 text-xs text-neutral-600 leading-relaxed">
-            {BUSINESS_INFO.aboutSummary}
-          </p>
-          <div className="mt-3.5 flex items-center gap-2">
+          <div className="pt-1 flex flex-wrap items-center gap-2">
             <button
               type="button"
               onClick={() => navigate('/about')}
               className="px-3.5 py-2 rounded-xl bg-[#171717] text-white text-xs font-bold inline-flex items-center gap-1.5 hover:bg-neutral-800 transition-colors cursor-pointer"
             >
-              Learn More <ArrowRight className="w-3.5 h-3.5" />
+              About Us <ArrowRight className="w-3.5 h-3.5" />
             </button>
             <button
               type="button"

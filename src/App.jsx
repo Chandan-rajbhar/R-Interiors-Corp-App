@@ -21,6 +21,11 @@ import { Login } from './pages/Login';
 import { Signup } from './pages/Signup';
 import { Notifications } from './pages/Notifications';
 import { Profile } from './pages/Profile';
+import { DigitalMarketing } from './pages/DigitalMarketing';
+import { SeoServices } from './pages/SeoServices';
+import { BusinessListings } from './pages/BusinessListings';
+import { MantaBlog } from './pages/MantaBlog';
+import { MantaInfoPage } from './pages/MantaInfoPage';
 
 function AppRoutes() {
   const location = useLocation();
@@ -62,6 +67,15 @@ function AppRoutes() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/notifications" element={<Notifications />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/digital-marketing" element={<DigitalMarketing />} />
+          <Route path="/seo-services" element={<SeoServices />} />
+          <Route path="/seo-faqs" element={<SeoServices />} />
+          <Route path="/business-listings" element={<BusinessListings />} />
+          <Route path="/blog" element={<MantaBlog />} />
+          <Route path="/manta-about" element={<MantaInfoPage mode="about" />} />
+          <Route path="/manta-reviews" element={<MantaInfoPage mode="reviews" />} />
+          <Route path="/terms" element={<MantaInfoPage mode="terms" />} />
+          <Route path="/privacy" element={<MantaInfoPage mode="privacy" />} />
           <Route path="*" element={<Navigate to="/home" replace />} />
         </Routes>
       </AnimatePresence>
