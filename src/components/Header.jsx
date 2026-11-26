@@ -1,11 +1,42 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Bell, User } from 'lucide-react';
+import { ArrowLeft, Bell, User } from 'lucide-react';
 import { BrandLogo } from '../assets/icons/BrandLogo';
 import { getUnreadNotificationCount } from '../data/notificationsData';
 
+const TOP_LEVEL_ROUTES = ['/home', '/about', '/services', '/gallery', '/contact'];
 const MEMBER_STORAGE_KEY = 'manta_member_session';
+
+const SUBPAGE_TITLES = {
+  '/login': 'Sign In',
+  '/signup': 'Create Account',
+  '/profile': 'Profile',
+  '/notifications': 'Notifications',
+  '/estimate': 'Free Estimate',
+  '/directory': 'Directory',
+  '/digital-marketing': 'Digital Marketing',
+  '/seo-services': 'SEO Services',
+  '/seo-faqs': 'SEO FAQs',
+  '/business-listings': 'Business Listings',
+  '/blog': 'Blog',
+  '/manta-about': 'About Manta',
+  '/manta-reviews': 'Manta Reviews',
+  '/terms': 'Terms & Conditions',
+  '/privacy': 'Privacy Policy',
+  '/hours': 'Business Hours',
+  '/reviews': 'Customer Reviews',
+  '/faqs': 'FAQs',
+  '/menu': 'Menu',
+};
+
+function getSubpageTitle(pathname) {
+  if (SUBPAGE_TITLES[pathname]) return SUBPAGE_TITLES[pathname];
+  if (pathname.startsWith('/services/')) return 'Service Details';
+  if (pathname.startsWith('/directory/category/')) return 'Category';
+  if (pathname.startsWith('/directory/info/')) return 'Information';
+  return 'Back';
+}
 
 function readMemberSession() {
   try {
@@ -23,6 +54,7 @@ export function Header() {
   const [unreadCount, setUnreadCount] = useState(getUnreadNotificationCount);
   const [member, setMember] = useState(readMemberSession);
 
+  const isTopLevel = TOP_LEVEL_ROUTES.includes(location.pathname);
   const isNotificationsPage = location.pathname === '/notifications';
   const isProfilePage = location.pathname === '/profile';
 
@@ -37,24 +69,49 @@ export function Header() {
     return () => window.removeEventListener('manta-member-updated', syncMember);
   }, []);
 
+  const handleBack = () => {
+    if (window.history.length > 1) {
+      navigate(-1);
+    } else {
+      navigate('/home');
+    }
+  };
+
   const memberInitial = member?.name?.trim()?.charAt(0)?.toUpperCase() || '';
 
   return (
     <header className="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-[#C7C7C7]/40 px-4 h-14 flex items-center justify-between shadow-[0_1px_8px_rgba(0,0,0,0.03)]">
-      {/* Left: Brand */}
-      <div className="flex items-center min-w-0">
-        <button
-          type="button"
-          onClick={() => navigate('/home')}
-          className="text-left focus:outline-none cursor-pointer"
-          aria-label="R Interiors Corp Home"
-        >
-          <BrandLogo size="sm" />
-        </button>
+      {/* Left: Native Mobile App Back + Title on sub-pages, BrandLogo on main tabs */}
+      <div className="flex items-center gap-2.5 min-w-0">
+        {isTopLevel ? (
+          <button
+            type="button"
+            onClick={() => navigate('/home')}
+            className="text-left focus:outline-none cursor-pointer"
+            aria-label="Manta Home"
+          >
+            <BrandLogo size="sm" />
+          </button>
+        ) : (
+          <div className="flex items-center gap-2.5 min-w-0">
+            <motion.button
+              whileTap={{ scale: 0.9 }}
+              type="button"
+              onClick={handleBack}
+              aria-label="Go back"
+              className="w-9 h-9 -ml-1 rounded-full bg-neutral-100 hover:bg-neutral-200/80 flex items-center justify-center text-[#171717] transition-colors cursor-pointer shrink-0"
+            >
+              <ArrowLeft className="w-4 h-4" />
+            </motion.button>
+            <span className="text-sm font-extrabold text-[#171717] truncate">
+              {getSubpageTitle(location.pathname)}
+            </span>
+          </div>
+        )}
       </div>
 
       {/* Right: Notifications Page + Profile Page */}
-      <div className="flex items-center gap-1.5">
+      <div className="flex items-center gap-1.5 shrink-0">
         <motion.button
           whileTap={{ scale: 0.92 }}
           type="button"
