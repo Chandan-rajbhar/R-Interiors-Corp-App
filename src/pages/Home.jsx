@@ -4,12 +4,9 @@ import {
   ArrowRight,
   Award,
   Calendar,
-  CheckCircle2,
   Phone,
   ShieldCheck,
   Sparkles,
-  Clock,
-  Star,
 } from 'lucide-react';
 import { AnimatedPage } from '../components/AnimatedPage';
 import { DirectoryCategoriesGrid } from '../components/DirectoryCategoriesGrid';
@@ -18,7 +15,6 @@ import { ServiceCard } from '../components/ServiceCard';
 import {
   BUSINESS_HIGHLIGHTS,
   BUSINESS_INFO,
-  WHY_CHOOSE_US,
 } from '../data/businessData';
 import { HERO_IMAGE, SERVICES_DATA } from '../data/servicesData';
 
@@ -80,18 +76,9 @@ export function Home() {
       <div className="px-4 py-5 space-y-6">
         {/* Quick Service & Directory Search */}
         <section aria-label="Search services and directory">
-          <div className="flex items-center justify-between mb-2">
-            <h2 className="text-xs font-extrabold uppercase tracking-wider text-neutral-500">
-              Find Services Near You
-            </h2>
-            <button
-              type="button"
-              onClick={() => navigate('/directory')}
-              className="text-xs font-bold text-[#A71912] inline-flex items-center gap-1 hover:underline cursor-pointer"
-            >
-              Full Directory <ArrowRight className="w-3 h-3" />
-            </button>
-          </div>
+          <h2 className="text-xs font-extrabold uppercase tracking-wider text-neutral-500 mb-2">
+            Find Services Near You
+          </h2>
           <DirectorySearch compact />
         </section>
 
@@ -153,66 +140,6 @@ export function Home() {
                 </div>
               );
             })}
-          </div>
-        </section>
-
-        {/* Why Choose Us & Company Overview */}
-        <section
-          aria-labelledby="why-choose-heading"
-          className="bg-white rounded-2xl p-4 border border-[#C7C7C7]/50 shadow-sm space-y-4"
-        >
-          <div>
-            <div className="flex items-center justify-between gap-2">
-              <h2 id="why-choose-heading" className="text-base font-extrabold text-[#171717]">
-                Why Choose {BUSINESS_INFO.name}
-              </h2>
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-neutral-100 text-neutral-700 shrink-0">
-                Est. {BUSINESS_INFO.servingSince}
-              </span>
-            </div>
-            <p className="mt-1 text-xs text-neutral-600 leading-relaxed">
-              {BUSINESS_INFO.aboutSummary}
-            </p>
-          </div>
-
-          <ul className="space-y-2.5 pt-2 border-t border-neutral-100">
-            {WHY_CHOOSE_US.map((item) => (
-              <li key={item.id} className="flex items-start gap-2.5">
-                <CheckCircle2 className="w-4 h-4 text-[#A71912] shrink-0 mt-0.5" />
-                <div>
-                  <p className="text-xs font-bold text-[#171717]">{item.title}</p>
-                  <p className="text-[11px] text-neutral-500 leading-snug">
-                    {item.description}
-                  </p>
-                </div>
-              </li>
-            ))}
-          </ul>
-
-          <div className="pt-1 flex flex-wrap items-center gap-2">
-            <button
-              type="button"
-              onClick={() => navigate('/about')}
-              className="px-3.5 py-2 rounded-xl bg-[#171717] text-white text-xs font-bold inline-flex items-center gap-1.5 hover:bg-neutral-800 transition-colors cursor-pointer"
-            >
-              About Us <ArrowRight className="w-3.5 h-3.5" />
-            </button>
-            <button
-              type="button"
-              onClick={() => navigate('/hours')}
-              className="px-3 py-2 rounded-xl border border-[#C7C7C7] text-[#171717] text-xs font-semibold inline-flex items-center gap-1.5 hover:bg-neutral-50 transition-colors cursor-pointer"
-            >
-              <Clock className="w-3.5 h-3.5 text-[#A71912]" />
-              Hours
-            </button>
-            <button
-              type="button"
-              onClick={() => navigate('/reviews')}
-              className="px-3 py-2 rounded-xl border border-[#C7C7C7] text-[#171717] text-xs font-semibold inline-flex items-center gap-1.5 hover:bg-neutral-50 transition-colors cursor-pointer"
-            >
-              <Star className="w-3.5 h-3.5 text-[#A71912]" />
-              Reviews
-            </button>
           </div>
         </section>
 

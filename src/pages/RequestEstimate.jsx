@@ -153,7 +153,7 @@ export function RequestEstimate() {
       setStatus('error');
       setStatusMessage(
         err.message ||
-          'We could not reach the submission service. Please use the direct email or call options below.'
+        'We could not reach the submission service. Please use the direct email or call options below.'
       );
     }
   };
@@ -308,11 +308,10 @@ export function RequestEstimate() {
                       key={method}
                       type="button"
                       onClick={() => setForm((p) => ({ ...p, preferredContact: method }))}
-                      className={`py-2.5 rounded-xl text-xs font-bold border transition-colors cursor-pointer ${
-                        active
-                          ? 'bg-[#A71912] text-white border-[#A71912]'
-                          : 'bg-white text-[#171717] border-[#C7C7C7]'
-                      }`}
+                      className={`py-2.5 rounded-xl text-xs font-bold border transition-colors cursor-pointer ${active
+                        ? 'bg-[#A71912] text-white border-[#A71912]'
+                        : 'bg-white text-[#171717] border-[#C7C7C7]'
+                        }`}
                     >
                       {method}
                     </button>

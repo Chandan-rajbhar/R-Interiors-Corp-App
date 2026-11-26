@@ -118,11 +118,10 @@ export function Services() {
               key={city.name}
               type="button"
               onClick={() => setSelectedCity(city.name)}
-              className={`px-2.5 py-1 rounded-full text-[11px] font-semibold transition-colors cursor-pointer ${
-                selectedCity === city.name
-                  ? 'bg-white text-[#A71912]'
-                  : 'bg-white/15 text-white hover:bg-white/25'
-              }`}
+              className={`px-2.5 py-1 rounded-full text-[11px] font-semibold transition-colors cursor-pointer ${selectedCity === city.name
+                ? 'bg-white text-[#A71912]'
+                : 'bg-white/15 text-white hover:bg-white/25'
+                }`}
             >
               {city.name}
             </button>

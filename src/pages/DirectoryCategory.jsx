@@ -28,10 +28,34 @@ import {
   MantaTruckingIcon,
 } from '../assets/icons/MantaIcons';
 import { AnimatedPage } from '../components/AnimatedPage';
-import { CATEGORY_IMAGES, DIRECTORY_CATEGORIES } from '../data/directoryData';
+import { DIRECTORY_CATEGORIES } from '../data/directoryData';
 import { MANTA_DIRECTORY_LISTINGS } from '../data/mantaDirectoryListings';
 import { BUSINESS_INFO } from '../data/businessData';
 import { SERVICES_DATA } from '../data/servicesData';
+
+const AVATAR_PALETTE = [
+  'bg-[#A71912] text-white',
+  'bg-[#171717] text-white',
+  'bg-emerald-700 text-white',
+  'bg-sky-700 text-white',
+  'bg-amber-700 text-white',
+  'bg-indigo-700 text-white',
+];
+
+function getCompanyImageUrl(categoryId, companyId, index, isFeatured) {
+  const seed = encodeURIComponent(
+    `${categoryId}-${isFeatured ? 'featured' : 'listing'}-${companyId}-${index}`
+  );
+  return `https://picsum.photos/seed/${seed}/180/180`;
+}
+
+function getInitials(name = '') {
+  const words = name.trim().split(/\s+/).filter(Boolean);
+  if (words.length >= 2) {
+    return `${words[0][0]}${words[1][0]}`.toUpperCase();
+  }
+  return (words[0]?.slice(0, 2) || 'B').toUpperCase();
+}
 
 const CATEGORY_ICONS = {
   construction: MantaConstructionIcon,
@@ -50,25 +74,39 @@ function normalizeTel(phone) {
   return digits ? `tel:${digits}` : undefined;
 }
 
-function CompanyCard({ company, featured = false, image, categoryLabel }) {
+function CompanyCard({
+  company,
+  featured = false,
+  image,
+  categoryLabel,
+  colorIndex = 0,
+}) {
   const [expanded, setExpanded] = useState(false);
+  const [imgError, setImgError] = useState(false);
   const telHref = company.phone ? normalizeTel(company.phone) : undefined;
   const hasLongDescription = (company.description?.length || 0) > 130;
+  const avatarColor = AVATAR_PALETTE[colorIndex % AVATAR_PALETTE.length];
 
   return (
     <div
-      className={`bg-white rounded-2xl p-4 border shadow-sm transition-colors ${
-        featured ? 'border-[#A71912]/40' : 'border-[#C7C7C7]/50'
-      }`}
+      className={`bg-white rounded-2xl p-4 border shadow-sm transition-colors ${featured ? 'border-[#A71912]/40' : 'border-[#C7C7C7]/50'
+        }`}
     >
       <div className="flex items-start gap-3">
-        {image && (
+        {image && !imgError ? (
           <img
             src={image}
             alt={`${company.name} — ${categoryLabel || 'Business'}`}
             loading="lazy"
-            className="w-16 h-16 rounded-xl object-cover shrink-0 border border-neutral-200/80"
+            onError={() => setImgError(true)}
+            className="w-16 h-16 rounded-xl object-cover shrink-0 border border-neutral-200/80 bg-neutral-100"
           />
+        ) : (
+          <div
+            className={`w-16 h-16 rounded-xl shrink-0 flex items-center justify-center text-sm font-black ${avatarColor}`}
+          >
+            {getInitials(company.name)}
+          </div>
         )}
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-1.5">
@@ -115,9 +153,8 @@ function CompanyCard({ company, featured = false, image, categoryLabel }) {
       {company.description && (
         <div className="mt-2.5 pt-2.5 border-t border-neutral-100">
           <p
-            className={`text-xs text-neutral-600 leading-relaxed ${
-              expanded ? '' : 'line-clamp-2'
-            }`}
+            className={`text-xs text-neutral-600 leading-relaxed ${expanded ? '' : 'line-clamp-2'
+              }`}
           >
             {company.description}
           </p>
@@ -285,11 +322,10 @@ export function DirectoryCategory() {
               <button
                 type="button"
                 onClick={() => setActiveTab('listings')}
-                className={`py-2 px-2 rounded-lg text-[11px] font-bold flex items-center justify-center gap-1 transition-colors cursor-pointer ${
-                  activeTab === 'listings'
-                    ? 'bg-white text-[#A71912] shadow-sm'
-                    : 'text-neutral-600 hover:text-[#171717]'
-                }`}
+                className={`py-2 px-2 rounded-lg text-[11px] font-bold flex items-center justify-center gap-1 transition-colors cursor-pointer ${activeTab === 'listings'
+                  ? 'bg-white text-[#A71912] shadow-sm'
+                  : 'text-neutral-600 hover:text-[#171717]'
+                  }`}
               >
                 <Building2 className="w-3.5 h-3.5" />
                 Listings ({filteredFeatured.length + filteredAll.length})
@@ -297,11 +333,10 @@ export function DirectoryCategory() {
               <button
                 type="button"
                 onClick={() => setActiveTab('subcategories')}
-                className={`py-2 px-2 rounded-lg text-[11px] font-bold flex items-center justify-center gap-1 transition-colors cursor-pointer ${
-                  activeTab === 'subcategories'
-                    ? 'bg-white text-[#A71912] shadow-sm'
-                    : 'text-neutral-600 hover:text-[#171717]'
-                }`}
+                className={`py-2 px-2 rounded-lg text-[11px] font-bold flex items-center justify-center gap-1 transition-colors cursor-pointer ${activeTab === 'subcategories'
+                  ? 'bg-white text-[#A71912] shadow-sm'
+                  : 'text-neutral-600 hover:text-[#171717]'
+                  }`}
               >
                 <Layers className="w-3.5 h-3.5" />
                 Topics ({filteredSubcategories.length})
@@ -309,11 +344,10 @@ export function DirectoryCategory() {
               <button
                 type="button"
                 onClick={() => setActiveTab('states')}
-                className={`py-2 px-2 rounded-lg text-[11px] font-bold flex items-center justify-center gap-1 transition-colors cursor-pointer ${
-                  activeTab === 'states'
-                    ? 'bg-white text-[#A71912] shadow-sm'
-                    : 'text-neutral-600 hover:text-[#171717]'
-                }`}
+                className={`py-2 px-2 rounded-lg text-[11px] font-bold flex items-center justify-center gap-1 transition-colors cursor-pointer ${activeTab === 'states'
+                  ? 'bg-white text-[#A71912] shadow-sm'
+                  : 'text-neutral-600 hover:text-[#171717]'
+                  }`}
               >
                 <Map className="w-3.5 h-3.5" />
                 States ({filteredStates.length})
@@ -328,12 +362,13 @@ export function DirectoryCategory() {
                     <h2 className="text-sm font-extrabold text-[#171717] px-1">
                       Featured Company Listings ({filteredFeatured.length})
                     </h2>
-                    {filteredFeatured.map((company) => (
+                    {filteredFeatured.map((company, idx) => (
                       <CompanyCard
                         key={company.id}
                         company={company}
                         featured
-                        image={CATEGORY_IMAGES[category.id]}
+                        colorIndex={idx}
+                        image={getCompanyImageUrl(category.id, company.id, idx, true)}
                         categoryLabel={category.label}
                       />
                     ))}
@@ -345,11 +380,12 @@ export function DirectoryCategory() {
                     <h2 className="text-sm font-extrabold text-[#171717] px-1">
                       All Company Listings ({filteredAll.length})
                     </h2>
-                    {visibleAllListings.map((company) => (
+                    {visibleAllListings.map((company, idx) => (
                       <CompanyCard
                         key={company.id}
                         company={company}
-                        image={CATEGORY_IMAGES[category.id]}
+                        colorIndex={idx + filteredFeatured.length}
+                        image={getCompanyImageUrl(category.id, company.id, idx, false)}
                         categoryLabel={category.label}
                       />
                     ))}
