@@ -5,7 +5,6 @@ import { AppLayout } from './layouts/AppLayout';
 import { Splash } from './pages/Splash';
 import { Home } from './pages/Home';
 import { About } from './pages/About';
-import { Services } from './pages/Services';
 import { ServiceDetails } from './pages/ServiceDetails';
 import { Gallery } from './pages/Gallery';
 import { Contact } from './pages/Contact';
@@ -51,7 +50,7 @@ function AppRoutes() {
         <Routes location={location} key={location.pathname}>
           <Route path="/home" element={<Home />} />
           <Route path="/about" element={<About />} />
-          <Route path="/services" element={<Services />} />
+          <Route path="/services" element={<Directory />} />
           <Route path="/services/:slug" element={<ServiceDetails />} />
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/contact" element={<Contact />} />
