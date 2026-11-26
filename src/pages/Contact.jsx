@@ -5,7 +5,7 @@ import { Phone, Mail, MapPin, Clock, Calculator, ExternalLink, Copy, Share2, Che
 import { AnimatedPage } from '../components/AnimatedPage';
 import { ContactCard } from '../components/ContactCard';
 import { BUSINESS_INFO } from '../data/businessData';
-import { HERO_IMAGE } from '../data/servicesData';
+import contactBannerImg from '../assets/images/stucco-texture-detail.jpg';
 
 export function Contact() {
   const navigate = useNavigate();
@@ -46,16 +46,18 @@ export function Contact() {
   return (
     <AnimatedPage>
       {/* Header Banner */}
-      <div className="relative h-40 bg-[#171717] overflow-hidden">
+      <div className="relative h-40 overflow-hidden">
         <img
-          src={HERO_IMAGE}
+          src={contactBannerImg}
           alt="Contact R Interiors Corp"
-          className="w-full h-full object-cover opacity-50"
+          className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#171717] via-[#171717]/65 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/15 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 p-5">
-          <h1 className="text-2xl font-black text-white">Let&apos;s Discuss Your Project</h1>
-          <p className="mt-1 text-xs text-neutral-300">
+          <h1 className="text-2xl font-black text-white drop-shadow-sm">
+            Let&apos;s Discuss Your Project
+          </h1>
+          <p className="mt-1 text-xs text-white/90 drop-shadow-sm">
             Get in touch with {BUSINESS_INFO.name} for a free estimate.
           </p>
         </div>

@@ -4,7 +4,8 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { X, Info, ChevronLeft, ChevronRight } from 'lucide-react';
 import { AnimatedPage } from '../components/AnimatedPage';
 import { ProjectCard } from '../components/ProjectCard';
-import { GALLERY_ITEMS, HERO_IMAGE } from '../data/servicesData';
+import { GALLERY_ITEMS } from '../data/servicesData';
+import galleryBannerImg from '../assets/images/interior-living-drywall.jpg';
 
 const CATEGORIES = ['All', 'Stucco', 'Drywall'];
 
@@ -34,17 +35,19 @@ export function Gallery() {
   return (
     <AnimatedPage>
       {/* Header Banner */}
-      <div className="relative h-40 bg-[#171717] overflow-hidden">
+      <div className="relative h-40 overflow-hidden">
         <img
-          src={HERO_IMAGE}
+          src={galleryBannerImg}
           alt="Craftsmanship Gallery"
-          className="w-full h-full object-cover opacity-50"
+          className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#171717] via-[#171717]/60 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/15 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 p-5">
-          <h1 className="text-2xl font-black text-white">Project & Service Gallery</h1>
-          <p className="mt-1 text-xs text-neutral-300">
-            Quality Craftsmanship in Stucco & Drywall
+          <h1 className="text-2xl font-black text-white drop-shadow-sm">
+            Project &amp; Service Gallery
+          </h1>
+          <p className="mt-1 text-xs text-white/90 drop-shadow-sm">
+            Quality Craftsmanship in Stucco &amp; Drywall
           </p>
         </div>
         <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#A71912]" />

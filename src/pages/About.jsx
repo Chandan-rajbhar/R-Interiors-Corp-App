@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Award, Calendar, MapPin, ShieldCheck, ArrowRight, Phone } from 'lucide-react';
 import { AnimatedPage } from '../components/AnimatedPage';
 import { BUSINESS_INFO, COMPANY_VALUES } from '../data/businessData';
-import { HERO_IMAGE } from '../data/servicesData';
+import aboutBannerImg from '../assets/images/stucco-finishing.jpg';
 
 export function About() {
   const navigate = useNavigate();
@@ -17,19 +17,22 @@ export function About() {
   return (
     <AnimatedPage>
       {/* Top Banner */}
-      <div className="relative h-44 bg-[#171717] overflow-hidden">
+      <div className="relative h-44 overflow-hidden">
         <img
-          src={HERO_IMAGE}
+          src={aboutBannerImg}
           alt="R Interiors Corp craftsmanship"
-          className="w-full h-full object-cover opacity-55"
+          className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#171717] via-[#171717]/50 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/15 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 p-5">
-          <span className="text-[11px] font-bold uppercase tracking-widest text-[#C7C7C7]">
+          <span className="text-[11px] font-bold uppercase tracking-widest text-white/90 drop-shadow-sm">
             Company Profile
           </span>
-          <h1 className="text-2xl font-black text-white mt-0.5">About R Interiors Corp</h1>
+          <h1 className="text-2xl font-black text-white mt-0.5 drop-shadow-sm">
+            About R Interiors Corp
+          </h1>
         </div>
+        <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#A71912]" />
       </div>
 
       <div className="px-4 py-5 space-y-5">
