@@ -14,13 +14,13 @@ export function AppLayout({ children }) {
   }, [pathname]);
 
   return (
-    <div className="min-h-screen w-full bg-[#ECEEF2] sm:py-6 sm:px-4 flex items-center justify-center">
-      {/* Mobile App Container: Fullscreen on phones, realistic centered mobile app frame on tablets/desktop */}
-      <div className="w-full sm:max-w-[430px] min-h-screen sm:min-h-[840px] sm:max-h-[900px] sm:h-[calc(100vh-3rem)] bg-[#F8F9FA] sm:rounded-[2.25rem] sm:border-[6px] sm:border-[#171717] sm:shadow-[0_24px_60px_rgba(23,23,23,0.22)] flex flex-col overflow-hidden relative">
+    <div className="min-h-dvh w-full bg-[#ECEEF2] sm:py-5 sm:px-4 flex items-center justify-center">
+      {/* Mobile App Container: Fullscreen 100dvh on phones, viewport-fitted centered mobile app frame on tablets/desktop */}
+      <div className="w-full sm:max-w-[430px] h-dvh sm:h-[min(860px,calc(100dvh-2.5rem))] bg-[#F8F9FA] sm:rounded-[2.25rem] sm:border-[6px] sm:border-[#171717] sm:shadow-[0_24px_60px_rgba(23,23,23,0.22)] flex flex-col overflow-hidden relative">
         <Header />
         <main
           ref={scrollRef}
-          className="flex-1 overflow-y-auto overflow-x-hidden app-scroll pb-6"
+          className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden app-scroll pb-6"
         >
           {children}
         </main>

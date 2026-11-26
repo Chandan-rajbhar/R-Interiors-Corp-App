@@ -25,7 +25,7 @@ export function BottomNavigation() {
   return (
     <nav
       aria-label="Primary bottom navigation"
-      className="sticky bottom-0 z-30 bg-white/95 backdrop-blur-md border-t border-[#C7C7C7]/50 px-2 pt-1.5 pb-safe shadow-[0_-4px_20px_rgba(0,0,0,0.05)]"
+      className="shrink-0 z-30 bg-white/95 backdrop-blur-md border-t border-[#C7C7C7]/50 px-2 pt-1.5 pb-safe shadow-[0_-4px_20px_rgba(0,0,0,0.05)]"
     >
       <div className="grid grid-cols-5 items-center max-w-md mx-auto pb-1.5">
         {BOTTOM_NAV_ITEMS.map((item) => {
