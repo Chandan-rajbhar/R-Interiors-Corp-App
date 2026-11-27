@@ -2,9 +2,9 @@ import mantaLogo from '../images/manta-logo.png';
 
 export function BrandLogo({ size = 'md' }) {
   const sizes = {
-    sm: 'h-6 w-auto',
-    md: 'h-8 w-auto',
-    lg: 'h-11 w-auto',
+    sm: 'h-[18px] w-auto',
+    md: 'h-6 w-auto',
+    lg: 'h-9 w-auto',
   };
 
   const sizeClass = sizes[size] || sizes.md;
