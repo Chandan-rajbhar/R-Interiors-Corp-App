@@ -1,18 +1,53 @@
-import { motion } from 'framer-motion';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Award, Calendar, MapPin, ShieldCheck, ArrowRight, Phone } from 'lucide-react';
+import { motion } from 'framer-motion';
+import {
+  CheckCircle2,
+  ArrowRight,
+  Share2,
+  Check,
+  TrendingUp,
+  Award,
+  Target,
+} from 'lucide-react';
 import { AnimatedPage } from '../components/AnimatedPage';
-import { BUSINESS_INFO, COMPANY_VALUES } from '../data/businessData';
 import aboutBannerImg from '../assets/images/stucco-finishing.jpg';
+
+const TOP_BENEFITS = [
+  'Full Digital Marketing suite with data-driven decisions and strategies.',
+  'Industry-leading user experience.',
+  'Custom quote for every product built for the needs of your business.',
+  'Dedicated Customer Success Manager and Digital Marketing Experts to help along the way.',
+  'Customizable reporting through a Member Dashboard to see all products and progress in one place.',
+  'Proprietary SEO technology built to service the needs of your business.',
+];
 
 export function About() {
   const navigate = useNavigate();
+  const [copiedShare, setCopiedShare] = useState(false);
 
-  const stats = [
-    { label: 'Years Expertise', value: BUSINESS_INFO.experienceYears, icon: Award },
-    { label: 'Serving Since', value: BUSINESS_INFO.servingSince, icon: Calendar },
-    { label: 'Location', value: 'Deerfield Beach', icon: MapPin },
-  ];
+  const handleShare = async () => {
+    const shareData = {
+      title: 'About Manta',
+      text: 'Manta Provides Online Marketing Services for Small Businesses.',
+      url: window.location.href,
+    };
+    if (navigator.share) {
+      try {
+        await navigator.share(shareData);
+        return;
+      } catch {
+        // User cancelled share
+      }
+    }
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      setCopiedShare(true);
+      setTimeout(() => setCopiedShare(false), 2000);
+    } catch {
+      // Ignore clipboard errors
+    }
+  };
 
   return (
     <AnimatedPage>
@@ -20,129 +55,148 @@ export function About() {
       <div className="relative h-44 overflow-hidden">
         <img
           src={aboutBannerImg}
-          alt="R Interiors Corp craftsmanship"
+          alt="About Manta"
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/15 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 p-5">
           <span className="text-[11px] font-bold uppercase tracking-widest text-white/90 drop-shadow-sm">
-            Company Profile
+            Online Marketing &amp; Directory
           </span>
           <h1 className="text-2xl font-black text-white mt-0.5 drop-shadow-sm">
-            About R Interiors Corp
+            About Manta
           </h1>
         </div>
         <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#A71912]" />
       </div>
 
       <div className="px-4 py-5 space-y-5">
-        {/* Key Stats */}
-        <div className="grid grid-cols-3 gap-2.5">
-          {stats.map((stat) => {
-            const Icon = stat.icon;
-            return (
-              <div
-                key={stat.label}
-                className="bg-white rounded-2xl p-3 border border-[#C7C7C7]/50 shadow-sm text-center"
-              >
-                <Icon className="w-4 h-4 text-[#A71912] mx-auto mb-1" />
-                <p className="text-sm font-black text-[#171717]">{stat.value}</p>
-                <p className="text-[10px] font-medium text-neutral-500 mt-0.5">{stat.label}</p>
-              </div>
-            );
-          })}
-        </div>
-
-        {/* Company Introduction */}
+        {/* Manta Provides Online Marketing Services */}
         <section className="bg-white rounded-2xl p-4 border border-[#C7C7C7]/50 shadow-sm space-y-3">
-          <h2 className="text-base font-extrabold text-[#171717]">Who We Are</h2>
-          <p className="text-sm text-neutral-700 leading-relaxed">
-            {BUSINESS_INFO.aboutSummary}
-          </p>
-          <p className="text-sm text-neutral-700 leading-relaxed">
-            {BUSINESS_INFO.aboutExtended}
-          </p>
-        </section>
-
-        {/* Experience Timeline */}
-        <section className="bg-white rounded-2xl p-4 border border-[#C7C7C7]/50 shadow-sm">
-          <h2 className="text-base font-extrabold text-[#171717] mb-3">
-            Our Experience & Approach
+          <h2 className="text-base font-extrabold text-[#171717]">
+            Manta Provides Online Marketing Services
           </h2>
-          <div className="space-y-4 border-l-2 border-[#A71912]/25 pl-4 ml-1.5">
-            <div className="relative">
-              <span className="absolute -left-[21px] top-1 w-2.5 h-2.5 rounded-full bg-[#A71912]" />
-              <p className="text-xs font-bold text-[#A71912] uppercase tracking-wider">
-                27+ Years of Trade Expertise
-              </p>
-              <p className="mt-1 text-xs text-neutral-600 leading-relaxed">
-                Deep hands-on knowledge in stucco finishing, exterior textures, and interior drywall installation.
-              </p>
-            </div>
-            <div className="relative">
-              <span className="absolute -left-[21px] top-1 w-2.5 h-2.5 rounded-full bg-[#A71912]" />
-              <p className="text-xs font-bold text-[#A71912] uppercase tracking-wider">
-                Serving Since {BUSINESS_INFO.servingSince}
-              </p>
-              <p className="mt-1 text-xs text-neutral-600 leading-relaxed">
-                Established in {BUSINESS_INFO.serviceArea}, delivering reliable weekday service and consistent craftsmanship.
-              </p>
-            </div>
+          <p className="text-xs text-neutral-600 leading-relaxed">
+            Manta is a results-driven online marketing agency dedicated to helping small and medium-sized businesses grow online. For over 25 years, our mission has been to provide effective online marketing results and client experiences in the industry.
+          </p>
+
+          <div className="pt-2 border-t border-neutral-100 space-y-2">
+            <h3 className="text-xs font-extrabold text-[#171717] flex items-center gap-1.5">
+              <Award className="w-4 h-4 text-[#A71912]" />
+              Delivering Award-Winning Online Marketing Services for Over 25 Years
+            </h3>
+            <p className="text-xs text-neutral-600 leading-relaxed">
+              Manta started over 25 years ago to become a resource for small businesses nationwide. Today, Manta has helped millions of businesses grow online with digital marketing services, trusted experts, and consistent growth.
+            </p>
+            <p className="text-xs text-neutral-600 leading-relaxed">
+              Our team has helped 66% of our clients reach the top 10 results of Google within the first 6 months of beginning an SEO campaign.
+            </p>
+          </div>
+
+          <div className="pt-2 border-t border-neutral-100 space-y-1.5">
+            <h3 className="text-xs font-extrabold text-[#171717]">
+              Manta Prioritizes Generating Successful Outcomes
+            </h3>
+            <p className="text-xs text-neutral-600 leading-relaxed">
+              No matter what industry your business comes from, Manta has the experience and expertise to understand and assist your business needs.
+            </p>
           </div>
         </section>
 
-        {/* Values & Commitment */}
-        <section className="space-y-2.5">
-          <h2 className="text-base font-extrabold text-[#171717] px-1">
-            Our Values & Commitment
-          </h2>
-          {COMPANY_VALUES.map((val) => (
-            <div
-              key={val.title}
-              className="bg-white rounded-2xl p-4 border border-[#C7C7C7]/50 shadow-sm flex items-start gap-3"
-            >
-              <div className="w-8 h-8 rounded-xl bg-[#A71912]/10 text-[#A71912] flex items-center justify-center shrink-0 mt-0.5">
-                <ShieldCheck className="w-4 h-4" />
-              </div>
-              <div>
-                <h3 className="text-sm font-bold text-[#171717]">{val.title}</h3>
-                <p className="mt-1 text-xs text-neutral-600 leading-relaxed">
-                  {val.description}
-                </p>
-              </div>
-            </div>
-          ))}
+        {/* Top Benefits of Manta */}
+        <section className="bg-white rounded-2xl p-4 border border-[#C7C7C7]/50 shadow-sm space-y-3">
+          <div>
+            <h2 className="text-base font-extrabold text-[#171717] flex items-center gap-1.5">
+              <TrendingUp className="w-4 h-4 text-[#A71912]" />
+              Top Benefits of Manta
+            </h2>
+            <p className="mt-1 text-xs text-neutral-500">
+              30,000+ customers worldwide trust Manta with their digital marketing efforts.
+            </p>
+          </div>
+
+          <ul className="space-y-2.5">
+            {TOP_BENEFITS.map((benefit) => (
+              <li key={benefit} className="flex items-start gap-2.5">
+                <CheckCircle2 className="w-4 h-4 text-[#A71912] shrink-0 mt-0.5" />
+                <span className="text-xs text-neutral-700 leading-relaxed">
+                  {benefit}
+                </span>
+              </li>
+            ))}
+          </ul>
         </section>
 
-        {/* Service Location */}
-        <section className="bg-[#171717] text-white rounded-2xl p-4 shadow-sm">
-          <div className="flex items-start gap-3">
-            <MapPin className="w-5 h-5 text-[#A71912] shrink-0 mt-0.5" />
-            <div>
-              <h2 className="text-sm font-bold">Service Location</h2>
-              <p className="mt-1 text-xs text-neutral-300 leading-relaxed">
-                Based at {BUSINESS_INFO.address.full}, serving {BUSINESS_INFO.serviceArea}.
-              </p>
-            </div>
+        {/* Workplace, Competitive Advantage & Mission */}
+        <section className="bg-white rounded-2xl p-4 border border-[#C7C7C7]/50 shadow-sm space-y-3.5">
+          <div>
+            <h2 className="text-xs font-extrabold text-[#171717]">
+              Award-Winning Workplace
+            </h2>
+            <p className="mt-1 text-xs text-neutral-600 leading-relaxed">
+              Ready to make an impact and help small businesses succeed along the way? Our team is dedicated to supporting local businesses every day.
+            </p>
           </div>
-          <div className="mt-4 flex gap-2.5">
-            <motion.button
-              whileTap={{ scale: 0.97 }}
+
+          <div className="pt-2.5 border-t border-neutral-100">
+            <h2 className="text-xs font-extrabold text-[#171717]">
+              Online Marketing Services Designed to Give Your Business a Competitive Advantage
+            </h2>
+            <p className="mt-1 text-xs text-neutral-600 leading-relaxed">
+              We analyze your business and show you what online marketing services we recommend to grow your revenue—fast, easy, and tailored to your goals.
+            </p>
+          </div>
+
+          <div className="pt-2.5 border-t border-neutral-100">
+            <h2 className="text-xs font-extrabold text-[#171717] flex items-center gap-1.5">
+              <Target className="w-4 h-4 text-[#A71912]" />
+              Our Mission is to Empower Small Businesses to Achieve Success
+            </h2>
+            <p className="mt-1 text-xs text-neutral-600 leading-relaxed">
+              Millions of unique visitors search our Manta directory every month to find local business needs through our comprehensive database. Business owners can claim and customize their profile page to improve online visibility and marketability.
+            </p>
+          </div>
+        </section>
+
+        {/* Share & Actions */}
+        <div className="flex flex-col gap-2.5 pt-1">
+          <motion.button
+            whileTap={{ scale: 0.98 }}
+            type="button"
+            onClick={() => navigate('/digital-marketing')}
+            className="w-full py-3.5 px-4 rounded-xl bg-[#A71912] hover:bg-[#87120C] text-white text-xs font-bold flex items-center justify-center gap-2 shadow-md transition-colors cursor-pointer"
+          >
+            Explore Digital Marketing Services
+            <ArrowRight className="w-4 h-4" />
+          </motion.button>
+
+          <div className="grid grid-cols-2 gap-2.5">
+            <button
               type="button"
-              onClick={() => navigate('/estimate')}
-              className="flex-1 py-2.5 rounded-xl bg-[#A71912] text-white text-xs font-bold flex items-center justify-center gap-1.5 cursor-pointer"
+              onClick={() => navigate('/business-listings')}
+              className="py-3 px-4 rounded-xl bg-[#171717] hover:bg-neutral-800 text-white text-xs font-bold flex items-center justify-center gap-1.5 cursor-pointer transition-colors"
             >
-              Request Estimate <ArrowRight className="w-3.5 h-3.5" />
-            </motion.button>
-            <motion.a
-              whileTap={{ scale: 0.97 }}
-              href={BUSINESS_INFO.phoneHref}
-              className="py-2.5 px-4 rounded-xl bg-white/10 text-white text-xs font-semibold flex items-center justify-center gap-1.5"
+              Claim My Listing
+            </button>
+            <button
+              type="button"
+              onClick={handleShare}
+              className="py-3 px-4 rounded-xl bg-white border border-[#C7C7C7] text-[#171717] text-xs font-bold flex items-center justify-center gap-1.5 hover:bg-neutral-50 cursor-pointer transition-colors"
             >
-              <Phone className="w-3.5 h-3.5" /> Call
-            </motion.a>
+              {copiedShare ? (
+                <>
+                  <Check className="w-3.5 h-3.5 text-emerald-600" />
+                  Link Copied
+                </>
+              ) : (
+                <>
+                  <Share2 className="w-3.5 h-3.5 text-[#A71912]" />
+                  Share
+                </>
+              )}
+            </button>
           </div>
-        </section>
+        </div>
       </div>
     </AnimatedPage>
   );
