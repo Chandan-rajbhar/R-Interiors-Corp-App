@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { ArrowRight } from 'lucide-react';
 import {
   MantaRestaurantsIcon,
   MantaLandscapingIcon,
@@ -25,8 +26,17 @@ export function DirectoryCategoriesGrid({
   heading = "Find What You're Looking For",
   subheading = 'Select any category to explore details and services inside the app.',
   headingId = 'dir-categories-heading',
+  limit = null,
+  onViewMore,
+  viewMoreLabel = 'View More',
 }) {
   const navigate = useNavigate();
+  const visibleCategories = DIRECTORY_CATEGORIES.filter(
+    (cat) => !cat.hiddenFromGrid
+  );
+  const displayedCategories = limit
+    ? visibleCategories.slice(0, limit)
+    : visibleCategories;
 
   return (
     <section aria-labelledby={headingId}>
@@ -38,7 +48,7 @@ export function DirectoryCategoriesGrid({
       )}
 
       <div className="mt-3 grid grid-cols-2 gap-2.5">
-        {DIRECTORY_CATEGORIES.filter((cat) => !cat.hiddenFromGrid).map((cat) => {
+        {displayedCategories.map((cat) => {
           const SvgIcon = CATEGORY_SVG_MAP[cat.id] || MantaConstructionIcon;
           const categoryImage = CATEGORY_IMAGES[cat.id];
           return (
@@ -100,6 +110,20 @@ export function DirectoryCategoriesGrid({
           );
         })}
       </div>
+
+      {onViewMore && (
+        <div className="mt-3 flex justify-center">
+          <motion.button
+            whileTap={{ scale: 0.96 }}
+            type="button"
+            onClick={onViewMore}
+            className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#A71912]/10 hover:bg-[#A71912] text-[#A71912] hover:text-white text-[11px] font-bold transition-colors cursor-pointer"
+          >
+            {viewMoreLabel}
+            <ArrowRight className="w-3 h-3" />
+          </motion.button>
+        </div>
+      )}
     </section>
   );
 }

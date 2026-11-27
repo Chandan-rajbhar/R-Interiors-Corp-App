@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
@@ -33,6 +33,17 @@ export function Directory() {
   });
   const [showAllCities, setShowAllCities] = useState(false);
   const [copiedPhone, setCopiedPhone] = useState(false);
+
+  useEffect(() => {
+    if (location.state?.scrollToCategories) {
+      const timer = setTimeout(() => {
+        document
+          .getElementById('dir-categories-heading')
+          ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 120);
+      return () => clearTimeout(timer);
+    }
+  }, [location.state]);
 
   const normalizedQuery = searchState.query.trim().toLowerCase();
 

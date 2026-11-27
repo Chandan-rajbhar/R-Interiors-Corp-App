@@ -87,6 +87,11 @@ export function Home() {
           heading="Browse Directory"
           subheading="Select any category to explore local listings and services."
           headingId="home-directory-heading"
+          limit={4}
+          onViewMore={() =>
+            navigate('/services', { state: { scrollToCategories: true } })
+          }
+          viewMoreLabel="View More"
         />
 
         {/* Our Services */}
