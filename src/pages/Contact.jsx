@@ -9,6 +9,13 @@ import {
   HelpCircle,
 } from 'lucide-react';
 import { AnimatedPage } from '../components/AnimatedPage';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '../components/ui/select';
 import contactBannerImg from '../assets/images/stucco-texture-detail.jpg';
 
 const CONTACT_FAQS = [
@@ -229,16 +236,24 @@ export function Contact() {
                 <label className="block text-xs font-bold text-[#171717] mb-1">
                   Inquiry Type
                 </label>
-                <select
-                  name="inquiryType"
+                <Select
                   value={form.inquiryType}
-                  onChange={handleChange}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-neutral-50 border border-[#C7C7C7]/70 text-xs text-[#171717] focus:outline-none focus:border-[#A71912] focus:bg-white"
+                  onValueChange={(value) => {
+                    setForm((prev) => ({ ...prev, inquiryType: value }));
+                    if (error) setError('');
+                  }}
                 >
-                  <option value="General Inquiry">General Inquiry</option>
-                  <option value="Remove Profile">Remove Profile</option>
-                  <option value="Cancellation Request">Cancellation Request</option>
-                </select>
+                  <SelectTrigger aria-label="Inquiry Type">
+                    <SelectValue placeholder="Select inquiry type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="General Inquiry">General Inquiry</SelectItem>
+                    <SelectItem value="Remove Profile">Remove Profile</SelectItem>
+                    <SelectItem value="Cancellation Request">
+                      Cancellation Request
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
 
               <div className="grid grid-cols-2 gap-2.5">

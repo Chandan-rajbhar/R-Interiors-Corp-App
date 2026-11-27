@@ -3,6 +3,13 @@ import { motion } from 'framer-motion';
 import { Star, MessageSquarePlus, Send } from 'lucide-react';
 import { AnimatedPage } from '../components/AnimatedPage';
 import { ReviewCard } from '../components/ReviewCard';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '../components/ui/select';
 import { BUSINESS_INFO } from '../data/businessData';
 import { SERVICES_DATA } from '../data/servicesData';
 
@@ -135,18 +142,18 @@ export function Reviews() {
               <label htmlFor="review-service" className="block text-xs font-bold text-[#171717] mb-1">
                 Service
               </label>
-              <select
-                id="review-service"
-                value={service}
-                onChange={(e) => setService(e.target.value)}
-                className="w-full px-3 py-2 rounded-xl border border-[#C7C7C7] text-sm focus:outline-none focus:border-[#A71912]"
-              >
-                {SERVICES_DATA.map((s) => (
-                  <option key={s.id} value={s.title}>
-                    {s.title}
-                  </option>
-                ))}
-              </select>
+              <Select value={service} onValueChange={setService}>
+                <SelectTrigger id="review-service" className="bg-white text-sm">
+                  <SelectValue placeholder="Select a service" />
+                </SelectTrigger>
+                <SelectContent>
+                  {SERVICES_DATA.map((s) => (
+                    <SelectItem key={s.id} value={s.title}>
+                      {s.title}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
 
             <div>

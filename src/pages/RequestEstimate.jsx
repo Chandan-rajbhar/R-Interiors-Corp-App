@@ -12,6 +12,13 @@ import {
 } from 'lucide-react';
 import { AnimatedPage } from '../components/AnimatedPage';
 import { LoadingSpinner } from '../components/LoadingSpinner';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '../components/ui/select';
 import { BUSINESS_INFO } from '../data/businessData';
 import { SERVICES_DATA } from '../data/servicesData';
 
@@ -256,22 +263,29 @@ export function RequestEstimate() {
               <label htmlFor="service" className="block text-xs font-bold text-[#171717] mb-1">
                 Service Required *
               </label>
-              <select
-                id="service"
-                name="service"
+              <Select
                 value={form.service}
-                onChange={handleChange}
-                className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#C7C7C7] text-sm text-[#171717] focus:outline-none focus:border-[#A71912]"
+                onValueChange={(value) => {
+                  setForm((prev) => ({ ...prev, service: value }));
+                  if (errors.service) {
+                    setErrors((prev) => ({ ...prev, service: undefined }));
+                  }
+                }}
               >
-                {SERVICES_DATA.map((s) => (
-                  <option key={s.id} value={s.title}>
-                    {s.title}
-                  </option>
-                ))}
-                <option value="Stucco Finishing & Drywall Installation">
-                  Both Stucco Finishing & Drywall Installation
-                </option>
-              </select>
+                <SelectTrigger id="service" className="bg-white text-sm">
+                  <SelectValue placeholder="Select a service" />
+                </SelectTrigger>
+                <SelectContent>
+                  {SERVICES_DATA.map((s) => (
+                    <SelectItem key={s.id} value={s.title}>
+                      {s.title}
+                    </SelectItem>
+                  ))}
+                  <SelectItem value="Stucco Finishing & Drywall Installation">
+                    Both Stucco Finishing &amp; Drywall Installation
+                  </SelectItem>
+                </SelectContent>
+              </Select>
             </div>
 
             {/* Project Address */}
