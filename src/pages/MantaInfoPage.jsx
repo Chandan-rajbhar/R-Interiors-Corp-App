@@ -5,17 +5,29 @@ import {
   MANTA_PRIVACY_SECTIONS,
   MANTA_REVIEWS_PAGE_DATA,
   MANTA_TERMS_SECTIONS,
+  REVIEWS_BANNER_IMAGE,
 } from '../data/mantaPagesData';
 
 export function MantaInfoPage({ mode = 'about' }) {
   if (mode === 'reviews') {
     return (
       <AnimatedPage>
-        <div className="bg-[#171717] text-white px-5 py-6 border-b-4 border-[#A71912]">
-          <h1 className="text-xl font-black">Manta Business Reviews</h1>
-          <p className="mt-1 text-xs text-neutral-300">
-            See what our customers say about growing their business.
-          </p>
+        <div className="relative h-36 overflow-hidden">
+          <img
+            src={REVIEWS_BANNER_IMAGE}
+            alt="Manta Business Reviews"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+          <div className="absolute bottom-0 left-0 right-0 p-4">
+            <h1 className="text-lg font-black text-white drop-shadow-sm">
+              Manta Business Reviews
+            </h1>
+            <p className="mt-0.5 text-[11px] text-white/90 drop-shadow-sm">
+              See what our customers say about growing their business.
+            </p>
+          </div>
+          <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#A71912]" />
         </div>
 
         <div className="px-4 py-5 space-y-4">

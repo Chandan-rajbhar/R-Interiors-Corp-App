@@ -17,6 +17,10 @@ import {
   BUSINESS_INFO,
 } from '../data/businessData';
 import { HERO_IMAGE, SERVICES_DATA } from '../data/servicesData';
+import {
+  BLOG_BANNER_IMAGE,
+  REVIEWS_BANNER_IMAGE,
+} from '../data/mantaPagesData';
 
 const HIGHLIGHT_ICONS = {
   experience: Award,
@@ -145,6 +149,74 @@ export function Home() {
                 </div>
               );
             })}
+          </div>
+        </section>
+
+        {/* Compact Insights & Reviews Preview */}
+        <section aria-label="Insights and Reviews" className="space-y-2.5">
+          <h2 className="text-base font-extrabold text-[#171717]">
+            Insights &amp; Reviews
+          </h2>
+          <div className="grid grid-cols-2 gap-2.5">
+            <button
+              type="button"
+              onClick={() => navigate('/blog')}
+              className="bg-white rounded-2xl border border-[#C7C7C7]/50 shadow-sm overflow-hidden text-left hover:border-[#A71912]/40 transition-colors cursor-pointer flex flex-col"
+            >
+              <img
+                src={BLOG_BANNER_IMAGE}
+                alt="Small Business Blog"
+                loading="lazy"
+                className="w-full h-20 object-cover"
+              />
+              <div className="p-2.5">
+                <span className="text-[9px] font-bold uppercase tracking-wider text-[#A71912]">
+                  Marketing Blog
+                </span>
+                <p className="text-xs font-bold text-[#171717] leading-snug mt-0.5 line-clamp-2">
+                  Small Business Advice That Works
+                </p>
+              </div>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => navigate('/manta-reviews')}
+              className="bg-white rounded-2xl border border-[#C7C7C7]/50 shadow-sm overflow-hidden text-left hover:border-[#A71912]/40 transition-colors cursor-pointer flex flex-col"
+            >
+              <img
+                src={REVIEWS_BANNER_IMAGE}
+                alt="Manta Business Reviews"
+                loading="lazy"
+                className="w-full h-20 object-cover"
+              />
+              <div className="p-2.5">
+                <span className="text-[9px] font-bold uppercase tracking-wider text-[#A71912]">
+                  35M+ Businesses
+                </span>
+                <p className="text-xs font-bold text-[#171717] leading-snug mt-0.5 line-clamp-2">
+                  Manta Customer Reviews
+                </p>
+              </div>
+            </button>
+          </div>
+
+          <div className="flex items-center justify-center gap-3 pt-1 text-[11px] text-neutral-500">
+            <button
+              type="button"
+              onClick={() => navigate('/terms')}
+              className="hover:text-[#A71912] underline cursor-pointer"
+            >
+              Terms &amp; Conditions
+            </button>
+            <span aria-hidden="true">•</span>
+            <button
+              type="button"
+              onClick={() => navigate('/privacy')}
+              className="hover:text-[#A71912] underline cursor-pointer"
+            >
+              Privacy Policy
+            </button>
           </div>
         </section>
 

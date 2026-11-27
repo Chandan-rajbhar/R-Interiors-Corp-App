@@ -1,3 +1,9 @@
+import blogMarketingImg from '../assets/images/blog-marketing.jpg';
+import reviewsBannerImg from '../assets/images/reviews-banner.jpg';
+
+export const BLOG_BANNER_IMAGE = blogMarketingImg;
+export const REVIEWS_BANNER_IMAGE = reviewsBannerImg;
+
 export const DIGITAL_MARKETING_DATA = {
   heroTitle: 'Results Driven Online Marketing Agency for over 20 Years',
   heroSubtitle:
